@@ -1,0 +1,10 @@
+{
+  "name": "ndh-retro-hw-pipeline",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Zero-float Q16.16 fixed-point PS1 3D + GBA 2D + hybrid SPU/PSG hardware emulation suite with procedural RGB555 textures, reduced-motion pause, and <= 780 Hz NDH sensory-safe audio filtering.",
+  "scripts": {
+    "test": "node --test test/*.test.mjs"
+  },
+  "license": "MIT"
+}
