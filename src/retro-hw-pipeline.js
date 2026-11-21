@@ -130,7 +130,15 @@ export function drawPS1GouraudTriangle(
     let xShort = startV.x << SHIFT, uShort = startV.u, vShort = startV.v;
     let rShort = (startV.r ?? 128) << SHIFT, gShort = (startV.g ?? 128) << SHIFT, bShort = (startV.b ?? 128) << SHIFT;
 
-    for (let y = startV.y; y < endV.y; y += 1) {
+    const y0 = Math.max(0, startV.y); const y1 = Math.min(screenH, endV.y);
+    const skipY = y0 - startV.y;
+    if (skipY > 0) {
+      xLong += dxLong * skipY; uLong += duLong * skipY; vLong += dvLong * skipY;
+      rLong += drLong * skipY; gLong += dgLong * skipY; bLong += dbLong * skipY;
+      xShort += dxShort * skipY; uShort += duShort * skipY; vShort += dvShort * skipY;
+      rShort += drShort * skipY; gShort += dgShort * skipY; bShort += dbShort * skipY;
+    }
+    for (let y = y0; y < y1; y += 1) {
       if (y >= 0 && y < screenH) {
         let xl = xLong, xr = xShort, ul = uLong, ur = uShort, vl = vLong, vr = vShort;
         let rl = rLong, rr = rShort, gl = gLong, gr = gShort, bl = bLong, br = bShort;
@@ -211,8 +219,8 @@ export function renderPS1Mesh(buf32, w, h, mesh, mat3x3, camPos, focalQ16, tex32
       continue;
     }
 
-    const sx = Number((BigInt(rx) * BigInt(focalQ16)) / BigInt(rz)) | 0;
-    const sy = Number((BigInt(ry) * BigInt(focalQ16)) / BigInt(rz)) | 0;
+    const sx = Number((BigInt(rx) * BigInt(focalQ16)) / BigInt(rz)) >> SHIFT;
+    const sy = Number((BigInt(ry) * BigInt(focalQ16)) / BigInt(rz)) >> SHIFT;
     projected[i] = {
       x: (sx + halfW) | 0,
       y: (sy + halfH) | 0,
