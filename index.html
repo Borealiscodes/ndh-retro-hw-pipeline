@@ -1,21 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NDH Retro Hardware Playground &mdash; Q16.16 GBA + PS1 Pipeline</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>NDH RETRO HARDWARE PLAYGROUND (320&times;240 Q16.16 ZERO-FLOAT)</h1>
+    <p>PS1 Gouraud + 4&times;4 Dither + Additive Aura &bull; GBA Mode 7 Sea + H-Blank Ripple &bull; Mute-by-Default PSG/ADPCM</p>
+  </header>
 
+  <div class="viewport-frame">
+    <canvas id="screen" width="320" height="240" aria-label="320 by 240 Q16.16 Retro Hardware Software Framebuffer"></canvas>
+  </div>
 
+  <div class="controls" role="region" aria-label="Retro Pipeline Controls">
+    <button id="btnAudio" type="button">Unmute Audio (M)</button>
+    <button id="btnFilter" type="button" class="active">NDH Sensory Filter &le;780Hz: ON</button>
+    <button id="btnMotion" type="button" class="active">Motion: Playing (Space)</button>
+    <button id="btnChime" type="button">Trigger ADPCM Bell</button>
+    <button id="btnRipple" type="button" class="active">H-Blank Ripple: ON (R)</button>
+    <button id="btnAura" type="button" class="active">PS1 Additive Aura: ON (G)</button>
+    <select id="selTex" aria-label="Crystal Texture (Key T to cycle)">
+      <option value="jade">Texture: Jade Marble</option>
+      <option value="washi">Texture: Washi Parchment</option>
+      <option value="marble">Texture: Ivory Temple Marble</option>
+      <option value="stars">Texture: Starfield Nebula</option>
+    </select>
+  </div>
 
+  <div class="hud" id="hud" role="status" aria-live="polite">Frame: 0 | Native Res: 320&times;240 | Fixed-Point: Q16.16 | Audio: Muted</div>
 
-
-NDH Retro Hardware Playground — Q16.16 GBA + PS1 Pipeline
-NDH RETRO HARDWARE PLAYGROUND (320×240 Q16.16 ZERO-FLOAT)
-PS1 Gouraud + 4×4 Dither + Additive Aura • GBA Mode 7 Sea + H-Blank Ripple • Mute-by-Default PSG/ADPCM
-Unmute Audio (M)
-NDH Sensory Filter ≤780Hz: ON
-Motion: Playing (Space)
-Trigger ADPCM Bell
-H-Blank Ripple: ON (R)
-PS1 Additive Aura: ON (G)
-
-Texture: Jade Marble
-Texture: Washi Parchment
-Texture: Ivory Temple Marble
-Texture: Starfield Nebula
-
-Frame: 0 | Native Res: 320×240 | Fixed-Point: Q16.16 | Audio: Muted
+  <script type="module" src="src/playground-app.js"></script>
+</body>
+</html>
