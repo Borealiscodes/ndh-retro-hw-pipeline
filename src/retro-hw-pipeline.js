@@ -211,8 +211,8 @@ export function renderPS1Mesh(buf32, w, h, mesh, mat3x3, camPos, focalQ16, tex32
       continue;
     }
 
-    const sx = Number((BigInt(rx) * BigInt(focalQ16)) / BigInt(rz)) >> SHIFT;
-    const sy = Number((BigInt(ry) * BigInt(focalQ16)) / BigInt(rz)) >> SHIFT;
+    const sx = Number((BigInt(rx) * BigInt(focalQ16)) / BigInt(rz)) | 0;
+    const sy = Number((BigInt(ry) * BigInt(focalQ16)) / BigInt(rz)) | 0;
     projected[i] = {
       x: (sx + halfW) | 0,
       y: (sy + halfH) | 0,
