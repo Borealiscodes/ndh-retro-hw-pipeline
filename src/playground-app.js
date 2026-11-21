@@ -240,7 +240,7 @@ applyGBAHBlankWave(waterSlice, W, H - HORIZON_Y - 1, trig, frameTick, 3, 24, tru
 const rx = (frameTick * 3) & 1023;
 const ry = (frameTick * 5) & 1023;
 const rz = (trig.sinQ16((frameTick * 2) & 1023) >> 10);
-const bobY = (trig.sinQ16((frameTick * 6) & 1023) >> 3) - (10 << 16);
+const bobY = (trig.sinQ16((frameTick * 6) & 1023) >> 3) - (1 << 15);
 const mat = buildRotationMatrixQ16(rx, ry, rz, trig);
 const camPos = { x: 0, y: bobY, z: 3 << 16 };
 const focalQ16 = 220 << 16;
