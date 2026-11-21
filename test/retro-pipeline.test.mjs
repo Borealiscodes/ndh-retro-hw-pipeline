@@ -41,3 +41,26 @@ const decoded = decodePS1ADPCMToInt16(encoded);
 assert.equal(decoded.length, 56);
 assert.ok(Math.abs(decoded.at(10) - pcm.at(10)) < 1500);
 });
+
+test("4. 3D PS1 mesh rasterizes front-facing Gouraud triangles into framebuffer", () => {
+  const trig = createDeterministicTrigLUT();
+  const buf = new Uint32Array(64 * 64);
+  const tex = generateWashiTexture(16);
+  const mesh = {
+    verts: Array.of(
+      { x: 0, y: -ONE, z: 0, r: 255, g: 255, b: 255 },
+      { x: -ONE, y: ONE, z: 0, r: 200, g: 240, b: 255 },
+      { x: ONE, y: ONE, z: 0, r: 255, g: 220, b: 180 }
+    ),
+    tris: Array.of(
+      { i0: 0, i1: 1, i2: 2, u0: 0, v0: 0, u1: 0, v1: 15 << 16, u2: 15 << 16, v2: 15 << 16, blendMode: -1 }
+    )
+  };
+  const mat = buildRotationMatrixQ16(0, 0, 0, trig);
+  renderPS1Mesh(buf, 64, 64, mesh, mat, { x: 0, y: 0, z: 3 << 16 }, 64 << 16, tex, 16, 16);
+  let litPixels = 0;
+  for (let i = 0; i < buf.length; i += 1) {
+    if (buf[i] !== 0) litPixels += 1;
+  }
+  assert.ok(litPixels > 50);
+});

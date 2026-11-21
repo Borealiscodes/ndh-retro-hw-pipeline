@@ -232,7 +232,7 @@ export function renderPS1Mesh(buf32, w, h, mesh, mat3x3, camPos, focalQ16, tex32
     if (!p0 || !p1 || !p2) continue;
 
     const cross = (p1.x - p0.x) * (p2.y - p0.y) - (p1.y - p0.y) * (p2.x - p0.x);
-    if (cross <= 0) continue;
+    if (cross >= 0) continue;
 
     const avgZ = ((p0.z + p1.z + p2.z) / 3) | 0;
     visibleTris.push({ t, p0, p1, p2, avgZ });
@@ -437,9 +437,9 @@ const delay = ctx.createDelay();
 const feedback = ctx.createGain();
 const lpf = ctx.createBiquadFilter();
 delay.delayTime.value = delaySec;
-feedback.gain.value = Math.min(0.88, Math.pow(0.001, delaySec / decayTime));
+feedback.gain.value = Math.min(0.38, Math.pow(0.001, delaySec / decayTime));
 lpf.type = "lowpass";
-lpf.frequency.value = 3200;
+lpf.frequency.value = 780;
 input.connect(delay);
 delay.connect(lpf);
 lpf.connect(feedback);
